@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOSEPH Radomanana — Développement & Multimédia</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b0f;
+  --bg2:#0d1117;
+  --bg3:#111820;
+  --bg4:#0a0e14;
+  --cyan:#00d4ff;
+  --cyan2:#00a8cc;
+  --cyan3:rgba(0,212,255,0.08);
+  --gold:#c8a84b;
+  --gold2:rgba(200,168,75,0.12);
+  --ivory:#e8edf5;
+  --muted:#4a5568;
+  --muted2:#2d3748;
+  --border:rgba(0,212,255,0.1);
+  --border2:rgba(0,212,255,0.25);
+  --glow:0 0 40px rgba(0,212,255,0.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ivory);overflow-x:hidden;line-height:1.7}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:2px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 4rem;
+  background:rgba(8,11,15,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;
+  letter-spacing:0.08em;color:var(--ivory);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);display:inline-block;box-shadow:0 0 12px var(--cyan)}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{
+  text-decoration:none;font-size:0.78rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);transition:color 0.2s;font-weight:500;
+}
+.nav-links a:hover{color:var(--cyan)}
+.nav-cv{
+  padding:0.55rem 1.4rem;border:1px solid var(--border2);
+  color:var(--cyan);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+  background:transparent;cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-weight:500;transition:all 0.2s;border-radius:2px;
+}
+.nav-cv:hover{background:var(--cyan3);box-shadow:0 0 20px rgba(0,212,255,0.15)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 420px;
+  padding-top:72px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 3rem 5rem 4rem;
+}
+.hero-status{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.45rem 1rem;border:1px solid var(--border2);border-radius:20px;
+  background:var(--cyan3);
+  font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);
+  font-weight:500;margin-bottom:2.5rem;width:fit-content;
+}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,212,255,0.4)}50%{opacity:0.8;box-shadow:0 0 0 6px rgba(0,212,255,0)}}
+
+.hero-name{
+  font-size:clamp(2.8rem,5vw,5rem);font-weight:700;line-height:1.05;
+  margin-bottom:0.6rem;letter-spacing:-0.02em;
+}
+.hero-name .first{color:var(--cyan)}
+.hero-name .last{color:var(--ivory)}
+.hero-tagline{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.1rem,2vw,1.5rem);color:var(--gold);
+  margin-bottom:1.8rem;font-weight:400;letter-spacing:0.02em;
+}
+.hero-desc{
+  font-size:1rem;color:rgba(232,237,245,0.55);
+  max-width:480px;line-height:1.85;margin-bottom:3rem;font-weight:300;
+}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.85rem 2rem;border-radius:2px;
+  font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;
+  font-weight:600;cursor:pointer;text-decoration:none;
+  transition:all 0.25s;border:none;font-family:'Space Grotesk',sans-serif;
+}
+.btn-cyan{background:var(--cyan);color:#080b0f}
+.btn-cyan:hover{background:#33ddff;box-shadow:0 0 30px rgba(0,212,255,0.3);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--ivory);border:1px solid rgba(232,237,245,0.2)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+
+.hero-right{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg2);border-left:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.code-bg{
+  position:absolute;inset:0;
+  font-family:monospace;font-size:0.62rem;line-height:1.9;
+  color:rgba(0,212,255,0.06);padding:2rem;
+  white-space:pre;overflow:hidden;pointer-events:none;
+  letter-spacing:0.02em;
+}
+.avatar-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.avatar{
+  width:180px;height:180px;border-radius:50%;
+  border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg3);position:relative;
+  box-shadow:0 0 60px rgba(0,212,255,0.1);
+}
+.avatar-ring{
+  position:absolute;width:210px;height:210px;border-radius:50%;
+  border:1px dashed rgba(0,212,255,0.2);
+  animation:spin 15s linear infinite;
+}
+.avatar-ring2{
+  position:absolute;width:240px;height:240px;border-radius:50%;
+  border:1px dashed rgba(200,168,75,0.1);
+  animation:spin 25s linear infinite reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.avatar-initials{font-size:3.5rem;font-weight:700;color:var(--cyan);font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+.tech-pills{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;max-width:260px}
+.tech-pill{
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.3rem 0.8rem;border:1px solid var(--border);
+  color:rgba(232,237,245,0.45);border-radius:20px;font-weight:500;
+}
+
+/* SECTIONS */
+section{padding:6rem 4rem}
+.s-eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;margin-bottom:1rem;
+}
+.s-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--cyan)}
+.s-title{
+  font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;
+  line-height:1.15;color:var(--ivory);margin-bottom:0.5rem;letter-spacing:-0.02em;
+}
+.s-title span{color:var(--cyan)}
+.s-subtitle{color:rgba(232,237,245,0.45);font-size:0.97rem;font-weight:300;margin-bottom:3.5rem;max-width:560px}
+
+/* ABOUT */
+.about{background:var(--bg2);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-body p{color:rgba(232,237,245,0.6);margin-bottom:1.2rem;font-size:0.97rem;font-weight:300;line-height:1.85}
+.about-body p strong{color:var(--cyan);font-weight:600}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.stat-card{
+  padding:1.5rem;background:var(--bg3);
+  border:1px solid var(--border);border-radius:4px;
+  position:relative;overflow:hidden;transition:border-color 0.3s;
+}
+.stat-card:hover{border-color:var(--border2)}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+.stat-n{font-size:2.5rem;font-weight:700;color:var(--cyan);line-height:1;font-family:'Space Grotesk',sans-serif}
+.stat-l{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;font-weight:500}
+
+/* SERVICES */
+.services{background:var(--bg4)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.service-card{
+  padding:2rem 1.8rem;
+  background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+  transition:all 0.3s;cursor:default;
+}
+.service-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:var(--glow)}
+.service-icon{
+  width:48px;height:48px;border-radius:4px;
+  background:var(--cyan3);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1.5rem;
+}
+.service-title{font-size:1.1rem;font-weight:600;color:var(--ivory);margin-bottom:0.7rem}
+.service-desc{font-size:0.86rem;color:rgba(232,237,245,0.45);line-height:1.7;font-weight:300}
+.service-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.2rem}
+.stag{font-size:0.65rem;padding:0.2rem 0.6rem;border:1px solid var(--border);color:rgba(232,237,245,0.35);border-radius:2px;letter-spacing:0.06em}
+
+/* PROJECTS */
+.projects{background:var(--bg)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.proj-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;transition:all 0.3s;cursor:pointer;
+}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.proj-banner{
+  height:170px;display:flex;flex-direction:column;
+  justify-content:space-between;padding:1.5rem;position:relative;overflow:hidden;
+}
+.pb1{background:linear-gradient(135deg,#0a1628 0%,#0d2040 100%)}
+.pb2{background:linear-gradient(135deg,#0a1a14 0%,#0d2a1e 100%)}
+.pb3{background:linear-gradient(135deg,#1a0a28 0%,#200d40 100%)}
+.pb4{background:linear-gradient(135deg,#1a1400 0%,#2a2000 100%)}
+.proj-num{
+  font-size:5rem;font-weight:700;color:rgba(255,255,255,0.04);
+  position:absolute;right:0.5rem;bottom:-0.5rem;line-height:1;
+  font-family:'Space Grotesk',sans-serif;
+}
+.proj-type{
+  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;
+  padding:0.3rem 0.8rem;border:1px solid var(--border2);
+  border-radius:20px;background:var(--cyan3);width:fit-content;
+}
+.proj-stack{display:flex;flex-wrap:wrap;gap:0.3rem}
+.proj-body{padding:1.4rem 1.6rem}
+.proj-title{font-size:1.15rem;font-weight:600;color:var(--ivory);margin-bottom:0.5rem}
+.proj-desc{font-size:0.84rem;color:rgba(232,237,245,0.45);line-height:1.65;font-weight:300}
+.proj-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:1.2rem;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;text-decoration:none;transition:gap 0.2s;
+}
+.proj-link:hover{gap:10px}
+
+/* SKILLS */
+.skills{background:var(--bg2)}
+.skills-wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem}
+.skill-group-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;font-weight:600}
+.skill-item{margin-bottom:1.6rem}
+.skill-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem}
+.skill-name{font-size:0.9rem;font-weight:500;color:var(--ivory)}
+.skill-pct{font-size:0.8rem;color:var(--cyan);font-weight:600}
+.bar-bg{height:2px;background:rgba(232,237,245,0.07);border-radius:1px;overflow:hidden}
+.bar{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));width:0;transition:width 1.4s cubic-bezier(0.4,0,0.2,1)}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+.tool-badge{
+  display:flex;align-items:center;gap:10px;
+  padding:0.8rem 1rem;background:var(--bg3);
+  border:1px solid var(--border);border-radius:4px;font-size:0.82rem;
+  color:rgba(232,237,245,0.65);font-weight:400;transition:all 0.2s;
+}
+.tool-badge:hover{border-color:var(--border2);color:var(--ivory)}
+.tool-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+
+/* CONTACT */
+.contact{background:var(--bg4);position:relative;overflow:hidden}
+.contact::before{
+  content:'';position:absolute;
+  bottom:-300px;left:-300px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,0.03) 0%,transparent 70%);
+  pointer-events:none;
+}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.contact-info p{color:rgba(232,237,245,0.5);font-size:0.97rem;font-weight:300;line-height:1.85;margin-bottom:2.5rem}
+.citem{display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem}
+.cicon{
+  width:42px;height:42px;border:1px solid var(--border2);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-size:1.1rem;background:var(--cyan3);flex-shrink:0;
+}
+.ctext{font-size:0.88rem;color:rgba(232,237,245,0.6)}
+.social-row{display:flex;gap:0.8rem;margin-top:2rem}
+.social-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.65rem 1.3rem;border:1px solid var(--border);
+  color:rgba(232,237,245,0.55);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:var(--bg2);border-radius:2px;cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-weight:500;transition:all 0.2s;text-decoration:none;
+}
+.social-btn:hover{border-color:var(--border2);color:var(--cyan)}
+
+.cform{display:flex;flex-direction:column;gap:1.1rem}
+.fi{
+  width:100%;padding:0.9rem 1.1rem;
+  background:var(--bg2);border:1px solid var(--border);
+  color:var(--ivory);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;
+  border-radius:2px;outline:none;transition:border-color 0.2s;font-weight:400;
+}
+.fi::placeholder{color:var(--muted)}
+.fi:focus{border-color:var(--cyan2)}
+textarea.fi{height:130px;resize:vertical}
+.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* FOOTER */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:2rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.78rem;color:var(--muted);
+}
+footer .fcyan{color:var(--cyan);font-weight:600}
+
+/* ANIMATIONS */
+.fade{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade.in{opacity:1;transform:none}
+.d1{transition-delay:0.1s}.d2{transition-delay:0.22s}.d3{transition-delay:0.34s}.d4{transition-delay:0.46s}
+
+/* CURSOR LINE */
+.cursor{display:inline-block;width:2px;height:1em;background:var(--cyan);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--ivory);border-radius:2px;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{
+  display:none;position:fixed;top:60px;left:0;right:0;z-index:199;
+  background:rgba(8,11,15,0.98);border-bottom:1px solid var(--border);
+  flex-direction:column;padding:1.5rem 2rem;gap:1.2rem;
+  backdrop-filter:blur(20px);
+}
+.nav-mobile.open{display:flex}
+.nav-mobile a{text-decoration:none;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.nav-mobile a:hover{color:var(--cyan)}
+.nav-mobile .nav-cv-m{
+  margin-top:0.5rem;padding:0.7rem 1.4rem;border:1px solid var(--border2);
+  color:var(--cyan);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;
+  background:var(--cyan3);cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-weight:500;border-radius:2px;text-align:center;
+}
+
+/* ── TABLET (≤1024px) ── */
+@media(max-width:1024px){
+  nav{padding:1rem 2rem}
+  section{padding:5rem 2.5rem}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:7rem 2.5rem 3rem}
+  .hero-right{display:none}
+  .about{grid-template-columns:1fr;gap:3rem}
+  .skills-wrap{grid-template-columns:1fr;gap:3rem}
+  .contact-wrap{grid-template-columns:1fr;gap:3rem}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;padding:1.5rem 2rem}
+}
+
+/* ── MOBILE (≤768px) ── */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .nav-cv{display:none}
+  .hamburger{display:flex}
+  section{padding:4rem 1.5rem}
+  .hero-left{padding:6rem 1.5rem 3rem}
+  .hero-status{font-size:0.65rem;padding:0.4rem 0.85rem}
+  .about{grid-template-columns:1fr;gap:2.5rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .services-grid{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .skills-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .fi-row{grid-template-columns:1fr}
+  .social-row{flex-wrap:wrap}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;padding:1.5rem}
+}
+
+/* ── SMALL MOBILE (≤480px) ── */
+@media(max-width:480px){
+  nav{padding:0.9rem 1rem}
+  section{padding:3rem 1rem}
+  .hero-left{padding:5.5rem 1rem 2.5rem}
+  .hero-name{font-size:2.4rem}
+  .hero-tagline{font-size:1rem}
+  .hero-desc{font-size:0.9rem}
+  .hero-ctas{flex-direction:column}
+  .btn{width:100%;justify-content:center}
+  .s-title{font-size:1.7rem}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .stat-n{font-size:2rem}
+  .services-grid{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .tools-grid{grid-template-columns:1fr}
+  .proj-banner{height:140px}
+  .skill-name{font-size:0.82rem}
+  .social-row{flex-direction:column}
+  .social-btn{width:100%;justify-content:center}
+  footer{font-size:0.72rem;padding:1.2rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo"><span class="logo-dot"></span>JR</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cv" onclick="downloadCV()">↓ Télécharger CV</button>
+  <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#about" onclick="closeMenu()">À propos</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#projects" onclick="closeMenu()">Projets</a>
+  <a href="#skills" onclick="closeMenu()">Compétences</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <button class="nav-cv-m" onclick="closeMenu();downloadCV()">↓ Télécharger CV</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-status">
+      <span class="status-dot"></span>
+      Disponible pour missions freelance
+    </div>
+    <h1 class="hero-name">
+      <span class="first">JOSEPH</span><br>
+      <span class="last">Radomanana</span>
+    </h1>
+    <p class="hero-tagline">Développement, Informatique &amp; Création Multimédia</p>
+    <p class="hero-desc">
+      Je conçois des <strong style="color:var(--ivory);font-weight:600">applications web et mobiles</strong> performantes
+      et je produis des <strong style="color:var(--ivory);font-weight:600">contenus visuels professionnels</strong> —
+      code propre, image soignée, résultats concrets.
+      Basé à Antananarivo, disponible partout.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-cyan">Voir mes projets</a>
+      <a href="#contact" class="btn btn-ghost">Me contacter</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="code-bg">const joseph = {
+  role: "Dev & Créateur",
+  stack: ["React","Node","Flutter",
+          "Python","MongoDB"],
+  media: ["Cadrage","Montage",
+          "Photo"],
+  dispo: true,
+  location: "Antananarivo"
+}
+
+function buildSolution(client) {
+  return joseph.skills
+    .filter(s => s.match(client))
+    .map(s => s.deliver())
+}
+
+// Résultat : projets qui
+// fonctionnent et qui se voient</div>
+    <div class="avatar-wrap">
+      <div class="avatar">
+        <div class="avatar-ring"></div>
+        <div class="avatar-ring2"></div>
+        <span class="avatar-initials">JR</span>
+      </div>
+      <div class="tech-pills">
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Flutter</span>
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Multimédia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-body fade">
+    <p class="s-eyebrow">À propos</p>
+    <h2 class="s-title">Dev &amp; <span>Créatif</span></h2>
+    <p>Je suis <strong>développeur full stack et créateur multimédia</strong>, avec une approche centrée sur l'impact visuel et la performance technique. Ma double compétence me permet de livrer des projets complets : du code au contenu.</p>
+    <p>Que ce soit une <strong>application web</strong>, une <strong>app mobile</strong> ou une <strong>production audiovisuelle</strong>, j'apporte rigueur et créativité à chaque étape du projet.</p>
+    <p>Maîtrise de 3 langues (<strong>Malagasy, Français, Anglais</strong>) pour collaborer sans frontières.</p>
+    <a href="#contact" class="btn btn-cyan" style="margin-top:1.8rem;display:inline-flex">Démarrer un projet →</a>
+  </div>
+  <div class="stats-grid fade d1">
+    <div class="stat-card">
+      <div class="stat-n">10+</div>
+      <div class="stat-l">Technologies</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">2 en 1</div>
+      <div class="stat-l">Dev + Multimédia</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">3</div>
+      <div class="stat-l">Langues parlées</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">100%</div>
+      <div class="stat-l">Freelance ready</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="s-eyebrow fade">Ce que je fais</p>
+  <h2 class="s-title fade d1">Mes <span>services</span></h2>
+  <p class="s-subtitle fade d2">Des solutions complètes pour vos besoins numériques et visuels</p>
+  <div class="services-grid">
+    <div class="service-card fade">
+      <div class="service-icon">⚡</div>
+      <h3 class="service-title">Développement Web</h3>
+      <p class="service-desc">Sites et applications web modernes, rapides et responsive. Du front-end élégant au back-end robuste.</p>
+      <div class="service-tags">
+        <span class="stag">React</span><span class="stag">Node.js</span><span class="stag">Python</span><span class="stag">MongoDB</span>
+      </div>
+    </div>
+    <div class="service-card fade d1">
+      <div class="service-icon">📱</div>
+      <h3 class="service-title">Applications Mobile</h3>
+      <p class="service-desc">Apps iOS et Android cross-platform avec Flutter. Interface intuitive, performance native.</p>
+      <div class="service-tags">
+        <span class="stag">Flutter</span><span class="stag">Dart</span><span class="stag">Firebase</span><span class="stag">SQL</span>
+      </div>
+    </div>
+    <div class="service-card fade d2">
+      <div class="service-icon">🎬</div>
+      <h3 class="service-title">Production Vidéo</h3>
+      <p class="service-desc">Cadrage, réalisation et montage professionnel. Clips, reportages, présentations et contenus web.</p>
+      <div class="service-tags">
+        <span class="stag">Cadrage</span><span class="stag">Montage</span><span class="stag">Réalisation</span>
+      </div>
+    </div>
+    <div class="service-card fade d3">
+      <div class="service-icon">📸</div>
+      <h3 class="service-title">Photo &amp; Design</h3>
+      <p class="service-desc">Photographie professionnelle et identité visuelle pour vos projets et votre présence en ligne.</p>
+      <div class="service-tags">
+        <span class="stag">Photographie</span><span class="stag">Retouche</span><span class="stag">UI/UX</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <p class="s-eyebrow fade">Portfolio</p>
+  <h2 class="s-title fade d1">Projets <span>académiques</span></h2>
+  <p class="s-subtitle fade d2">Réalisations concrètes développées durant ma formation</p>
+  <div class="proj-grid">
+    <div class="proj-card fade">
+      <div class="proj-banner pb1">
+        <span class="proj-type">Application Web</span>
+        <div class="proj-stack">
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">React</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Node.js</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">MongoDB</span>
+        </div>
+        <span class="proj-num">01</span>
+      </div>
+      <div class="proj-body">
+        <h3 class="proj-title">Projet à définir</h3>
+        <p class="proj-desc">Décrivez ici votre premier projet : le problème résolu, les fonctionnalités clés et l'impact obtenu.</p>
+        <a href="#" class="proj-link">Voir le projet →</a>
+      </div>
+    </div>
+    <div class="proj-card fade d1">
+      <div class="proj-banner pb2">
+        <span class="proj-type">Application Mobile</span>
+        <div class="proj-stack">
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Flutter</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Firebase</span>
+        </div>
+        <span class="proj-num">02</span>
+      </div>
+      <div class="proj-body">
+        <h3 class="proj-title">Projet à définir</h3>
+        <p class="proj-desc">Votre deuxième projet mobile — app utile, interface soignée, expérience utilisateur pensée.</p>
+        <a href="#" class="proj-link">Voir le projet →</a>
+      </div>
+    </div>
+    <div class="proj-card fade d2">
+      <div class="proj-banner pb3">
+        <span class="proj-type">Back-end / API</span>
+        <div class="proj-stack">
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Python</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Django</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">SQL</span>
+        </div>
+        <span class="proj-num">03</span>
+      </div>
+      <div class="proj-body">
+        <h3 class="proj-title">Projet à définir</h3>
+        <p class="proj-desc">Troisième réalisation — API, système de gestion ou solution back-end robuste.</p>
+        <a href="#" class="proj-link">Voir le projet →</a>
+      </div>
+    </div>
+    <div class="proj-card fade d3">
+      <div class="proj-banner pb4">
+        <span class="proj-type">Production Multimédia</span>
+        <div class="proj-stack">
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Vidéo</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Photo</span>
+          <span class="stag" style="border-color:rgba(0,212,255,0.3);color:rgba(0,212,255,0.7)">Montage</span>
+        </div>
+        <span class="proj-num">04</span>
+      </div>
+      <div class="proj-body">
+        <h3 class="proj-title">Projet à définir</h3>
+        <p class="proj-desc">Production audiovisuelle — reportage, clip ou présentation vidéo réalisée dans le cadre académique.</p>
+        <a href="#" class="proj-link">Voir le projet →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <p class="s-eyebrow fade">Expertise</p>
+  <h2 class="s-title fade d1">Compétences <span>techniques</span></h2>
+  <p class="s-subtitle fade d2">Un spectre large pour des solutions complètes</p>
+  <div class="skills-wrap">
+    <div class="fade">
+      <p class="skill-group-label">Développement &amp; Multimédia</p>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-pct">92%</span></div><div class="bar-bg"><div class="bar" data-w="92"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">React / Vue.js</span><span class="skill-pct">82%</span></div><div class="bar-bg"><div class="bar" data-w="82"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">Node.js / Express</span><span class="skill-pct">78%</span></div><div class="bar-bg"><div class="bar" data-w="78"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">Python / Django / Flask</span><span class="skill-pct">76%</span></div><div class="bar-bg"><div class="bar" data-w="76"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">Flutter / Mobile</span><span class="skill-pct">74%</span></div><div class="bar-bg"><div class="bar" data-w="74"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">SQL / MongoDB</span><span class="skill-pct">80%</span></div><div class="bar-bg"><div class="bar" data-w="80"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">Cadrage / Montage vidéo</span><span class="skill-pct">85%</span></div><div class="bar-bg"><div class="bar" data-w="85"></div></div></div>
+      <div class="skill-item"><div class="skill-header"><span class="skill-name">Photographie</span><span class="skill-pct">80%</span></div><div class="bar-bg"><div class="bar" data-w="80"></div></div></div>
+    </div>
+    <div class="fade d1">
+      <p class="skill-group-label">Outils &amp; Langues</p>
+      <div class="tools-grid">
+        <div class="tool-badge"><span class="tool-dot"></span>Git / GitHub</div>
+        <div class="tool-badge"><span class="tool-dot"></span>VS Code</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Docker</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Linux</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Figma</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Postman</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Premiere Pro</div>
+        <div class="tool-badge"><span class="tool-dot"></span>Lightroom</div>
+      </div>
+      <div style="margin-top:2.5rem">
+        <p class="skill-group-label">Langues parlées</p>
+        <div style="display:flex;flex-direction:column;gap:0.8rem">
+          <div class="tool-badge" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="tool-dot"></span>Malagasy</span><span style="font-size:0.7rem;color:var(--cyan)">Maternelle</span></div>
+          <div class="tool-badge" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="tool-dot"></span>Français</span><span style="font-size:0.7rem;color:var(--cyan)">Courant</span></div>
+          <div class="tool-badge" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="tool-dot"></span>Anglais</span><span style="font-size:0.7rem;color:var(--cyan)">Professionnel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div class="fade">
+      <p class="s-eyebrow">Contact</p>
+      <h2 class="s-title">Démarrons un <span>projet</span></h2>
+      <p>Vous cherchez un développeur full stack, un créateur multimédia ou les deux à la fois ? Je suis disponible pour des missions freelance. Décrivez-moi votre besoin et répondons-y ensemble.</p>
+      <div class="citem"><div class="cicon">✉</div><span class="ctext">joseph.radomanana@email.com</span></div>
+      <div class="citem"><div class="cicon">☏</div><span class="ctext">+261 XX XX XXX XX</span></div>
+      <div class="citem"><div class="cicon">⌖</div><span class="ctext">Antananarivo, Madagascar</span></div>
+      <div class="social-row">
+        <a class="social-btn" href="#" onclick="alert('Ajoutez votre lien GitHub ici')">⌥ GitHub</a>
+        <a class="social-btn" href="#" onclick="alert('Ajoutez votre lien LinkedIn ici')">in LinkedIn</a>
+      </div>
+    </div>
+    <div class="cform fade d1">
+      <div class="fi-row">
+        <input type="text" class="fi" placeholder="Votre nom">
+        <input type="email" class="fi" placeholder="Votre email">
+      </div>
+      <input type="text" class="fi" placeholder="Type de projet (web, mobile, vidéo...)">
+      <input type="text" class="fi" placeholder="Budget estimé (optionnel)">
+      <textarea class="fi" placeholder="Décrivez votre projet..."></textarea>
+      <button class="btn btn-cyan" style="align-self:flex-start" onclick="alert('Connectez ce formulaire à un service email comme Formspree ou EmailJS.')">Envoyer la demande →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 <span class="fcyan">JOSEPH Radomanana</span> — Antananarivo, Madagascar</span>
+  <span>Développement · Informatique · Création Multimédia</span>
+</footer>
+
+<script>
+function downloadCV(){
+  const txt=`╔══════════════════════════════════════════════════════╗
+║           CURRICULUM VITAE — JOSEPH Radomanana        ║
+╚══════════════════════════════════════════════════════╝
+
+INFORMATIONS PERSONNELLES
+─────────────────────────
+Nom          : JOSEPH Radomanana
+Titre        : Développeur Full Stack & Créateur Multimédia
+Localisation : Antananarivo, Madagascar
+Email        : joseph.radomanana@email.com
+GitHub       : github.com/josephradomanana
+Disponible   : Missions freelance
+
+PROFIL
+──────
+Développeur full stack et créateur multimédia avec une double
+expertise en ingénierie logicielle et production audiovisuelle.
+Capable de livrer des projets complets : du code au contenu visuel.
+
+COMPÉTENCES TECHNIQUES
+──────────────────────
+Front-end   : HTML / CSS / JavaScript, React, Vue.js
+Back-end    : Node.js, Express, Python, Django, Flask
+Mobile      : Flutter / Dart
+Base données: SQL, MongoDB
+DevOps      : Git, GitHub, Docker, Linux, Cloud
+Multimédia  : Cadrage vidéo, Montage, Post-production, Photographie
+Design      : Figma, Adobe Premiere Pro, Lightroom
+
+LANGUES
+───────
+Malagasy — Langue maternelle
+Français  — Courant
+Anglais   — Professionnel
+
+PROJETS
+───────
+[01] Projet Web Full Stack
+     Technologies : React, Node.js, MongoDB
+     Description  : [À compléter]
+
+[02] Application Mobile
+     Technologies : Flutter, Firebase
+     Description  : [À compléter]
+
+[03] Projet Back-end / API
+     Technologies : Python, Django, SQL
+     Description  : [À compléter]
+
+[04] Production Multimédia
+     Outils       : Caméra, Premiere Pro, Lightroom
+     Description  : [À compléter]
+
+FORMATION
+─────────
+[Votre diplôme]
+[Votre université / école] — [Année]
+
+SOFT SKILLS
+───────────
+Créativité   · Rigueur technique · Communication
+Autonomie    · Travail en équipe · Adaptabilité
+Résolution de problèmes · Sensibilité visuelle`;
+
+  const b=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a');
+  a.href=u;a.download='CV_Joseph_Radomanana.txt';a.click();
+  URL.revokeObjectURL(u);
+}
+
+function toggleMenu(){
+  const ham=document.getElementById('ham');
+  const nav=document.getElementById('navMobile');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('navMobile').classList.remove('open');
+}
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:0.08});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar').forEach(b=>{b.style.width=b.dataset.w+'%'});
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.skills-wrap').forEach(el=>barObs.observe(el));
+</script>
+</body>
+</html>
